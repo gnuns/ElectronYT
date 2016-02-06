@@ -8,17 +8,21 @@ $.ajaxSetup({
     request.setRequestHeader("User-Agent",appUserAgent);
   }
 });
+
 document.addEventListener("keydown", function (e) {
-  if (e.which === 123) {
+  if (e.which === 123) { // F12 DevTools
     require('remote').getCurrentWindow().toggleDevTools();
-  } else if (e.which === 116) {
+  } else if (e.which === 116) { // F5 reload
     location.reload();
   }
 });
+
+
 var sPage = 1,
-    sQuery = "";
+    sQuery = "",
+    fName = "",
+    fExt = "";
 function loadvideo(vURL) {
-  $("#playerContainer").show();
   $("#player").html("");
   $("#urlInput").val(vURL);
   $("body").css("cursor", "progress");
@@ -55,6 +59,8 @@ function loadvideo(vURL) {
       var format = "mp4";
     }
     console.log(video.url);
+    fExt = '.' + format;
+    fName = info.title;
     $("#player").html("");
     $("body").css("cursor", "default");
     $("#pluswrap").fadeToggle();
@@ -89,6 +95,7 @@ function loadvideo(vURL) {
         }
       }
     );
+    $("#playerContainer").show();
     function resizePlayer(){
       var aspectRatio = 9/16,
       newWidth = document.getElementById('player').parentElement.offsetWidth - 30,
@@ -101,7 +108,7 @@ function loadvideo(vURL) {
     $("#vTitle").html('<b style="color:#191919">'+ info.title +
                       '</b> <span style="font-size:0.9em;color:#909090">'+
                       'by <a target="_blank" href="https://www.youtube.com/channel/' +
-                      info.ucid +'">' + info.author + "</a></span>");
+                      info.ucid +'">' + info.author + "</a> | <a href='"+video.url+"' download='"+fName + fExt +"'> Download Video</a> </span>");
     $("#vTitle").show();
     document.title = info.title + ' by ' + info.author + ' - Youtube';
   });
@@ -145,4 +152,14 @@ function searchVideos(word, more) {
     $('#loadMore').fadeIn('fast');
     document.title = word + ' - Youtube';
   });
+}
+function updateProgress(p) {
+  $('#progressC').css('width', p + '%');
+  $('#progressC').text(parseInt(p) + '%');
+}
+function showProgress() {
+  $(".progress-download").fadeIn();
+}
+function hideProgress() {
+  $(".progress-download").fadeOut();
 }

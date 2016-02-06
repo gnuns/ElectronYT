@@ -1,6 +1,6 @@
 # ElectronYT
 
-Simple Youtube client for desktop using [Electron](https://github.com/atom/electron/),
+Simple Youtube client (and downloader) for desktop using [Electron](https://github.com/atom/electron/),
  [Clappr](https://github.com/clappr/clappr/) and [ytdl-core](https://github.com/fent/node-ytdl-core)
 
 ![Demo Screenshot](http://i.imgur.com/S5GOJin.png)

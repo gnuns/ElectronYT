@@ -30,6 +30,27 @@ app.on('ready', function() {
   //resizable: false,
   //maximizable: false,
   });
+  mainWindow.webContents.session.on('will-download', function(event, item, webContents) {
+    // Set the save path, making Electron not to prompt a save dialog.
+    console.log(item.getMimeType());
+    console.log(item.getFilename());
+    console.log(item.getTotalBytes());
+    mainWindow.webContents.executeJavaScript("showProgress();");
+    item.on('updated', function() {
+      console.log('Received bytes: ' + item.getReceivedBytes());
+      mainWindow.webContents.executeJavaScript("updateProgress("+(parseInt(item.getReceivedBytes()) / parseInt(item.getTotalBytes()) * 100)+");");
+    });
+    item.on('done', function(e, state) {
+      if (state == "completed") {
+        console.log("Download successfully");
+        mainWindow.webContents.executeJavaScript("hideProgress();");
+        mainWindow.webContents.executeJavaScript("alert('Download successfully');");
+      } else {
+        mainWindow.webContents.executeJavaScript("hideProgress();");
+        console.log("Download is cancelled or interrupted that can't be resumed");
+      }
+    });
+  });
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
