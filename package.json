@@ -1,6 +1,7 @@
 {
   "name": "ElectronYT",
   "description": "Simple Youtube client for desktop using Electron and Clappr",
+  "author": "hezag",
   "version": "0.1.0",
   "main": "main.js",
   "dependencies": {
