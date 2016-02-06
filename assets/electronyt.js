@@ -1,4 +1,3 @@
-
 var appUserAgent = 'Mozilla/5.0 (X11; CrOS x86_64 7520.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.4 Safari/537.36';
 var ytdl = require('ytdl-core');
 var request = require("request");
@@ -31,20 +30,23 @@ function loadvideo(vURL) {
     }, function(err, info) {
     if (err) {
       console.error(err);
-      $("#player").html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> '+err.message+'</div>');
+      $("#player").html('<div class="alert alert-danger" role="alert"> '+
+                        '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> '+
+                        err.message+'</div>');
       $("body").css("cursor", "default");
       $("#pluswrap").fadeToggle();
       return;
     }
     console.log(info);
     var video = info.formats.find(function(element, index, array){
-        return (element.itag == /*"43"*/"18");
+        return (element.itag == "22"); //hq
     });
-    format = "webm";
+    format = "mp4";
     if(typeof video == 'undefined') {
       video = info.formats.find(function(element, index, array){
-          return (element.itag == "22");
+          return (element.itag == "43");
       });
+      var format = "webm";
       if(typeof video == 'undefined') {
         video = info.formats.find(function(element, index, array){
             return (element.itag == "18");
@@ -96,7 +98,10 @@ function loadvideo(vURL) {
 
     resizePlayer();
     window.onresize = resizePlayer;
-    $("#vTitle").html('<b style="color:#191919">'+ info.title + '</b> <span style="font-size:0.9em;color:#909090">by <a target="_blank" href="https://www.youtube.com/channel/' + info.ucid +'">' + info.author + "</a></span>");
+    $("#vTitle").html('<b style="color:#191919">'+ info.title +
+                      '</b> <span style="font-size:0.9em;color:#909090">'+
+                      'by <a target="_blank" href="https://www.youtube.com/channel/' +
+                      info.ucid +'">' + info.author + "</a></span>");
     $("#vTitle").show();
     document.title = info.title + ' by ' + info.author + ' - Youtube';
   });
