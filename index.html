@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ElectronYT</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./assets/electronyt.css">
+    <link rel="shortcut icon" href="./assets/icon.png">
+    <script type="text/javascript" src="./assets/electronyt.js"></script>
+    <script type="text/javascript" src="./assets/clappr/clappr.js"></script>
+    <script type="text/javascript" src="./assets/clappr/clappr-playback-rate-plugin.min.js"></script>
+  </head>
+  <body>
+  <div id="pluswrap" style="display:none">
+    <div class="plus">
+      <i class="fa fa-spinner fa-pulse"></i>
+    </div>
+   </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header" onsubmit="return false;">
+          <form class="navbar-form navbar-left  pull-left">
+            <div class="form-group">
+              <input type="text" class="form-control" id="searchInput" placeholder="cute cats playing piano">
+            </div>
+            <button class="btn btn-default" id="searchButton">search</button>
+          </form>
+          <form class="navbar-form navbar-right pull-right" onsubmit="return false;">
+            <div class="form-group">
+              <input type="text" class="form-control" id="urlInput" placeholder="youtube url">
+            </div>
+            <button class="btn btn-default" id="loadButton">load</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <div class="container" id="playerContainer"  style="display:none;">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title" id="vTitle"></h3>
+        </div>
+        <div class="panel-body">
+          <div id="player">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <ul class="thumbnails list-unstyled" id="searchResults">
+        </ul>
+        <button class="btn btn-primary btn-lg" type="button" id="loadMore">
+          load more
+        </button>
+      </div>
+    </div>
+    <script type="text/javascript">
+    $("document").ready(function(){
+      $("#loadButton").on("click", function(){
+          loadvideo($("#urlInput").val());
+          return false;
+      });
+      $("#searchButton").on("click", function(){
+        if($("#searchInput").val().length > 2) {
+          $("#playerContainer").slideUp();
+          $("#player").html("");
+          $("#vTitle").hide();
+          $("body").css("cursor", "progress");
+          $("#pluswrap").fadeToggle();
+          sQuery = $("#searchInput").val();
+          searchVideos(sQuery);
+        }
+        return false;
+      });
+      $("#loadMore").on("click", function(){
+          $('#loadMore').fadeOut();
+          $("body").css("cursor", "progress");
+          $("#pluswrap").fadeToggle();
+          searchVideos(sQuery, true);
+          return false;
+      });
+    });
+    </script>
+  </body>
+</html>
