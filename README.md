@@ -1,5 +1,4 @@
 # ElectronYT
-[![Dependency Status][daviddm-url]][daviddm-image]
 
 Simple Youtube client for desktop using [Electron](https://github.com/atom/electron/),
  [Clappr](https://github.com/clappr/clappr/) and [ytdl-core](https://github.com/fent/node-ytdl-core)
