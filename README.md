@@ -9,7 +9,7 @@ Simple Youtube client (and downloader) for desktop using [Electron](https://gith
 #### Running
 ```sh
 # Clone ElectronYT repository
-git clone https://github.com/hezag/ElectronYT.git
+git clone https://github.com/gnuns/ElectronYT.git
 
 cd ElectronYT
 
