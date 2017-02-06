@@ -41,7 +41,7 @@ function loadvideo(vURL) {
       $("#pluswrap").fadeToggle();
       return;
     }
-    console.log(info);
+    // console.log(info);
     var video = info.formats.find(function(element, index, array){
         return (element.itag == "22"); //hq
     });
@@ -58,7 +58,7 @@ function loadvideo(vURL) {
       }
       var format = "mp4";
     }
-    console.log(video.url);
+    // console.log(video.url);
     fExt = '.' + format;
     fName = info.title;
     $("#player").html("");
@@ -108,9 +108,10 @@ function loadvideo(vURL) {
     $("#vTitle").html('<b style="color:#191919">'+ info.title +
                       '</b> <span style="font-size:0.9em;color:#909090">'+
                       'by <a target="_blank" href="https://www.youtube.com/channel/' +
-                      info.ucid +'">' + info.author + "</a> | <a href='"+video.url+"' download='"+fName + fExt +"'> Download Video</a> </span>");
+                      info.ucid +'">' + info.author.name + "</a> | <a href='"+video.url+"' download='"+fName + fExt +"'> Download Video</a> </span>");
     $("#vTitle").show();
-    document.title = info.title + ' by ' + info.author + ' - Youtube';
+    // console.log(info.author.name);
+    document.title = info.title + ' by ' + info.author.name + ' - Youtube';
   });
 }
 function searchVideos(word, more) {
