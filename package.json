@@ -1,12 +1,16 @@
 {
   "name": "ElectronYT",
   "description": "Simple Youtube client for desktop using Electron and Clappr",
-  "author": "hezag",
-  "version": "0.1.0",
+  "author": "gnuns",
+  "version": "0.1.1",
   "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
   "dependencies": {
-    "ytdl-core": ">=0.7.3",
+    "cheerio": ">=0.20.0",
+    "electron": "^1.7.9",
     "request": ">=2.69.0",
-    "cheerio": ">=0.20.0"
+    "ytdl-core": ">=0.7.3"
   }
 }
