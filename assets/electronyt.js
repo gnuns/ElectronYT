@@ -1,7 +1,7 @@
-var appUserAgent = 'Mozilla/5.0 (X11; CrOS x86_64 7520.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.4 Safari/537.36';
-var ytdl = require('ytdl-core');
-var request = require("request");
-var cheerio = require("cheerio");
+const appUserAgent = 'Mozilla/5.0 (X11; CrOS x86_64 7520.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.4 Safari/537.36';
+const ytdl = require('ytdl-core');
+const request = require("request");
+const cheerio = require("cheerio");
 window.$ = window.jQuery = require('./assets/jquery.min.js');
 $.ajaxSetup({
   beforeSend: function(request) {
@@ -18,7 +18,7 @@ document.addEventListener("keydown", function (e) {
 });
 
 
-var sPage = 1,
+let sPage = 1,
     sQuery = "",
     fName = "",
     fExt = "";
@@ -42,21 +42,21 @@ function loadvideo(vURL) {
       return;
     }
     // console.log(info);
-    var video = info.formats.find(function(element, index, array){
+    let video = info.formats.find(function(element, index, array){
         return (element.itag == "22"); //hq
     });
-    format = "mp4";
-    if(typeof video == 'undefined') {
+    let format = "mp4";
+    if (typeof video == 'undefined') {
       video = info.formats.find(function(element, index, array){
           return (element.itag == "43");
       });
-      var format = "webm";
+      format = "webm";
       if(typeof video == 'undefined') {
         video = info.formats.find(function(element, index, array){
             return (element.itag == "18");
         });
       }
-      var format = "mp4";
+      format = "mp4";
     }
     // console.log(video.url);
     fExt = '.' + format;
@@ -64,7 +64,7 @@ function loadvideo(vURL) {
     $("#player").html("");
     $("body").css("cursor", "default");
     $("#pluswrap").fadeToggle();
-    var player = new Clappr.Player(
+    let player = new Clappr.Player(
       {
         mimeType:"video/" +format,
         source: video.url,
@@ -97,7 +97,7 @@ function loadvideo(vURL) {
     );
     $("#playerContainer").show();
     function resizePlayer(){
-      var aspectRatio = 9/16,
+      let aspectRatio = 9/16,
       newWidth = document.getElementById('player').parentElement.offsetWidth - 30,
       newHeight = 2 * Math.round(newWidth * aspectRatio/2);
       player.resize({width: newWidth, height: newHeight});
@@ -115,10 +115,9 @@ function loadvideo(vURL) {
   });
 }
 function searchVideos(word, more) {
-  if(typeof more == 'undefined') {
+  if (typeof more == 'undefined') {
     sPage = 1;
-  }
-  else {
+  } else {
     sPage++;
   }
   request({
@@ -127,17 +126,17 @@ function searchVideos(word, more) {
       'User-Agent': appUserAgent
     }
   }, function(error, response, body) {
-    var _ = cheerio.load(body);
+    let _ = cheerio.load(body);
     $("body").css("cursor", "default");
     $("#pluswrap").fadeToggle();
     if(sPage === 1) {
       $("#searchResults").html("");
     }
     _(".yt-lockup").each(function() {
-      var res = _(this);
+      let res = _(this);
       if(res.hasClass("yt-lockup-video")){
-        var vidId = res.attr("data-context-item-id");
-        var vidComp = '<li class="col-md-3" onclick="loadvideo(\'http://www.youtube.com/watch?v='+vidId+'\')">' +
+        let vidId = res.attr("data-context-item-id");
+        let vidComp = '<li class="col-md-3" onclick="loadvideo(\'http://www.youtube.com/watch?v='+vidId+'\')">' +
           '<div class="thumbnail vidresult" style="padding: 0">'+
             '<div style="padding:4px">'+
             '  <img alt="300x200" style="width: 100%" src="http://img.youtube.com/vi/'+vidId+'/mqdefault.jpg">'+
